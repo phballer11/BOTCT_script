@@ -1,16 +1,37 @@
 {
   "files": {
     "main.css": "/BOTCT_script/static/css/main.72901cd0.css",
-    "main.js": "/BOTCT_script/static/js/main.1c2f40cb.js",
+    "main.js": "/BOTCT_script/static/js/main.0d9c9bda.js",
     "static/js/787.50366fae.chunk.js": "/BOTCT_script/static/js/787.50366fae.chunk.js",
+    "static/media/saint.png": "/BOTCT_script/static/media/saint.4ecb4b7911fda38c105b.png",
+    "static/media/fortune_teller.png": "/BOTCT_script/static/media/fortune_teller.a78505eadd9e5f928c30.png",
+    "static/media/librarian.png": "/BOTCT_script/static/media/librarian.aad66c81543f363f2d21.png",
+    "static/media/drunk.png": "/BOTCT_script/static/media/drunk.1f832828816eacfa79ca.png",
+    "static/media/washerwoman.png": "/BOTCT_script/static/media/washerwoman.9aa7a03cf0fbd332b056.png",
+    "static/media/ravenkeeper.png": "/BOTCT_script/static/media/ravenkeeper.4b8897720aa0f5f55a06.png",
+    "static/media/butler.png": "/BOTCT_script/static/media/butler.1d6592c61f47b3dc7e09.png",
+    "static/media/virgin.png": "/BOTCT_script/static/media/virgin.cc5a5067d46e724b9832.png",
+    "static/media/scarlert_woman.png": "/BOTCT_script/static/media/scarlert_woman.d60ce92d8dac43eb2ca1.png",
+    "static/media/chef.png": "/BOTCT_script/static/media/chef.869998478ab6294ac1ac.png",
+    "static/media/slayer.png": "/BOTCT_script/static/media/slayer.73713e179e67bb0dfc7e.png",
     "static/media/baron.png": "/BOTCT_script/static/media/baron.c11eb76394ebb2da0b2a.png",
+    "static/media/Investigator.png": "/BOTCT_script/static/media/Investigator.40d8b618fd75796c29af.png",
+    "static/media/empath.png": "/BOTCT_script/static/media/empath.c57e7d0b04f9e645e0af.png",
+    "static/media/mayor.png": "/BOTCT_script/static/media/mayor.00ce559be1643e6d9289.png",
+    "static/media/soldier.png": "/BOTCT_script/static/media/soldier.d72b769f1174584b8c05.png",
+    "static/media/monk.png": "/BOTCT_script/static/media/monk.a4d47d99face58de7b65.png",
+    "static/media/undertaker.png": "/BOTCT_script/static/media/undertaker.4303f692b3fb579443da.png",
+    "static/media/poisoner.png": "/BOTCT_script/static/media/poisoner.0e1361fa0baaf637b4e3.png",
+    "static/media/imp.png": "/BOTCT_script/static/media/imp.140acd67178c12de26b6.png",
+    "static/media/recluse.png": "/BOTCT_script/static/media/recluse.1425c4e59008c8fbeb8a.png",
+    "static/media/spy.png": "/BOTCT_script/static/media/spy.2cdc101b9a02e9af6101.png",
     "index.html": "/BOTCT_script/index.html",
     "main.72901cd0.css.map": "/BOTCT_script/static/css/main.72901cd0.css.map",
-    "main.1c2f40cb.js.map": "/BOTCT_script/static/js/main.1c2f40cb.js.map",
+    "main.0d9c9bda.js.map": "/BOTCT_script/static/js/main.0d9c9bda.js.map",
     "787.50366fae.chunk.js.map": "/BOTCT_script/static/js/787.50366fae.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.72901cd0.css",
-    "static/js/main.1c2f40cb.js"
+    "static/js/main.0d9c9bda.js"
   ]
 }
