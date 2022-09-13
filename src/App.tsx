@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { BARON, DEMON, DRUNK, MINIONS, OUTSIDERS, role, TOWN_FOLKS } from './images';
+import { getRoles } from './numberOfRoles';
 
 interface player {
   name: string;
@@ -11,10 +12,10 @@ interface player {
 function App() {
 
   const [data, setData] = useState({
-    names: "candy suz jim ivy charlie vivian baiyi ka gary",
-    townsfolkCount: 5,
-    outsiderCount: 2,
-    minionCount: 1,
+    names: "",
+    townsfolkCount: 0,
+    outsiderCount: 0,
+    minionCount: 0,
   })
 
   const [players, setPlayers] = useState<player[]>([]);
@@ -38,10 +39,19 @@ function App() {
 
     const namesArray = data.names.split(' ');
     const filteredNames = namesArray.filter((name) => name !== '');
-    const minions = randomGetCharacters(data.minionCount, [...MINIONS]);
 
-    let townsfolkCountsUpdated = data.townsfolkCount;
-    let outsiderCountsUpdated = data.outsiderCount;
+    if (filteredNames.length < 5 || filteredNames.length > 15) {
+      alert('Please check the number of players');
+      return;
+    }
+
+    const numberOfRoles = getRoles(filteredNames.length);
+    setData(prev => ({ ...prev, townsfolkCount: numberOfRoles.townsfolkCounts, outsiderCount: numberOfRoles.outsiderCounts, minionCount: numberOfRoles.minionCounts }));
+
+    const minions = randomGetCharacters(numberOfRoles.minionCounts, [...MINIONS]);
+
+    let townsfolkCountsUpdated = numberOfRoles.townsfolkCounts;
+    let outsiderCountsUpdated = numberOfRoles.outsiderCounts;
     if (minions.findIndex(m => m.alt === BARON.alt) !== -1) {
       townsfolkCountsUpdated = +townsfolkCountsUpdated - 2;
       outsiderCountsUpdated = +outsiderCountsUpdated + 2;
@@ -107,7 +117,7 @@ function App() {
   return (
     <div className="App">
 
-      <label>Enter names of the players, split by " " space</label>
+      <label>Enter the names of the players, split by " " space. Support 5-15 players.</label>
       <br />
       <input
         style={{ width: '80%' }}
@@ -117,7 +127,7 @@ function App() {
         onChange={handleChange}
       // value={names}
       />
-      <div style={{
+      {/* <div style={{
         display: 'flex',
         flexDirection: 'column',
         flexWrap: 'nowrap',
@@ -135,23 +145,30 @@ function App() {
         <input type="number" name="minionCount" onChange={handleChange} />
         <br />
         <br />
-      </div>
+      </div> */}
+      <br />
+      <br />
+
       <button style={{ width: '96px', height: '24px' }} onClick={calculate}>Generate</button>
-      <h2>Number of players: {players.length}</h2>
-      <div style={{marginLeft: '1%'}}>
+      <h2>Number of players: {players.length}
+        {players.length > 0 && <>
+          <div style={{ color: 'green' }}>Townsfolks: {data.townsfolkCount} Outsiders: {data.outsiderCount}</div>
+          <div style={{ color: 'red' }}>Minions: {data.minionCount} Demon: 1</div>
+        </>}</h2>
+      <div style={{ marginLeft: '1%' }}>
         {players.map((player, index) => (
           <>
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems:'flex-start'}}>
-            <div style={{fontSize: 24, fontWeight: 'bold'}}>{player.name}</div>
-            <div>
-              <img src={player.imgSrc} alt={player.imgAlt} width='112' />
-              {player.imgAlt === DRUNK.alt && <img src={drunkRole.src} alt={drunkRole.alt} width='112' />}
-              {player.imgAlt === DEMON.alt && demonRoles.map((role, index) => <img src={role.src} alt={role.alt} width='112' />)}
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div style={{ fontSize: 24, fontWeight: 'bold' }}>{player.name}</div>
+              <div>
+                <img src={player.imgSrc} alt={player.imgAlt} width='112' />
+                {player.imgAlt === DRUNK.alt && <img src={drunkRole.src} alt={drunkRole.alt} width='112' />}
+                {player.imgAlt === DEMON.alt && demonRoles.map((role, index) => <img src={role.src} alt={role.alt} width='112' />)}
+              </div>
             </div>
-          </div>
-          <div style={{marginLeft: '-2%',  borderBottom: 'solid' }}></div>
+            <div style={{ marginLeft: '-2%', borderBottom: 'solid' }}></div>
           </>
-          ))}
+        ))}
       </div>
     </div>
   );
