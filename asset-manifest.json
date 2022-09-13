@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.72901cd0.css",
-    "main.js": "/static/js/main.28750c8b.js",
-    "static/js/787.50366fae.chunk.js": "/static/js/787.50366fae.chunk.js",
-    "static/media/baron.png": "/static/media/baron.c11eb76394ebb2da0b2a.png",
-    "index.html": "/index.html",
-    "main.72901cd0.css.map": "/static/css/main.72901cd0.css.map",
-    "main.28750c8b.js.map": "/static/js/main.28750c8b.js.map",
-    "787.50366fae.chunk.js.map": "/static/js/787.50366fae.chunk.js.map"
+    "main.css": "/BOTCT_script/static/css/main.72901cd0.css",
+    "main.js": "/BOTCT_script/static/js/main.1c2f40cb.js",
+    "static/js/787.50366fae.chunk.js": "/BOTCT_script/static/js/787.50366fae.chunk.js",
+    "static/media/baron.png": "/BOTCT_script/static/media/baron.c11eb76394ebb2da0b2a.png",
+    "index.html": "/BOTCT_script/index.html",
+    "main.72901cd0.css.map": "/BOTCT_script/static/css/main.72901cd0.css.map",
+    "main.1c2f40cb.js.map": "/BOTCT_script/static/js/main.1c2f40cb.js.map",
+    "787.50366fae.chunk.js.map": "/BOTCT_script/static/js/787.50366fae.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.72901cd0.css",
-    "static/js/main.28750c8b.js"
+    "static/js/main.1c2f40cb.js"
   ]
 }
