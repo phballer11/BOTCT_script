@@ -1,8 +1,8 @@
 {
   "name": "botct_script",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://phballer11.github.io",
+  "private": false,
+  "homepage": "https://phballer11.github.io/BOTCT_script",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
