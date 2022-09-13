@@ -11,10 +11,10 @@ interface player {
 function App() {
 
   const [data, setData] = useState({
-    names: "",
-    townsfolkCount: 0,
-    outsiderCount: 0,
-    minionCount: 0,
+    names: "candy suz jim ivy charlie vivian baiyi ka gary",
+    townsfolkCount: 5,
+    outsiderCount: 2,
+    minionCount: 1,
   })
 
   const [players, setPlayers] = useState<player[]>([]);
@@ -26,11 +26,11 @@ function App() {
 
   };
 
-  const reset = () => { 
+  const reset = () => {
     setPlayers([]);
     setDemonRoles([]);
     setDrunkRole(DRUNK);
-   }
+  }
 
   const calculate = () => {
     reset();
@@ -138,12 +138,20 @@ function App() {
       </div>
       <button style={{ width: '96px', height: '24px' }} onClick={calculate}>Generate</button>
       <h2>Number of players: {players.length}</h2>
-      <div className='name-list-container'>
-        {players.map((player, index) => (<div>{index + 1}. {player.name}
-          <img src={player.imgSrc} alt={player.imgAlt} width='112' />
-          {player.imgAlt === DRUNK.alt && <img src={drunkRole.src} alt={drunkRole.alt} width='112' />}
-          {player.imgAlt === DEMON.alt && demonRoles.map((role, index) => <img src={role.src} alt={role.alt} width='112' />)}
-        </div>))}
+      <div style={{marginLeft: '1%'}}>
+        {players.map((player, index) => (
+          <>
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems:'flex-start'}}>
+            <div style={{fontSize: 24, fontWeight: 'bold'}}>{player.name}</div>
+            <div>
+              <img src={player.imgSrc} alt={player.imgAlt} width='112' />
+              {player.imgAlt === DRUNK.alt && <img src={drunkRole.src} alt={drunkRole.alt} width='112' />}
+              {player.imgAlt === DEMON.alt && demonRoles.map((role, index) => <img src={role.src} alt={role.alt} width='112' />)}
+            </div>
+          </div>
+          <div style={{marginLeft: '-2%',  borderBottom: 'solid' }}></div>
+          </>
+          ))}
       </div>
     </div>
   );
