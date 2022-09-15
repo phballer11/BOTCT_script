@@ -12,7 +12,8 @@ interface player {
 function App() {
 
   const [data, setData] = useState({
-    names: "",
+    names: "peter candy jim suz ka gary charlie ivy vivian jason mizzy",
+    // names: "",
     townsfolkCount: 0,
     outsiderCount: 0,
     minionCount: 0,
@@ -21,6 +22,8 @@ function App() {
   const [players, setPlayers] = useState<player[]>([]);
   const [drunkRole, setDrunkRole] = useState<role>(DRUNK);
   const [demonRoles, setDemonRoles] = useState<role[]>([]);
+  const [unusedTownsfolks, setUnusedTownsfolks] = useState<role[]>([]);
+  const [unusedOutsiders, setUnusedOutsiders] = useState<role[]>([]);
 
   const handleChange = (event: any) => {
     setData(prev => ({ ...prev, [event.target.name]: event.target.value }));
@@ -85,6 +88,8 @@ function App() {
     });
     addDemonRoles([unusuedOutsiders, unusuedTownsFolk].flat());
     setPlayers(result);
+    setUnusedOutsiders(unusuedOutsiders);
+    setUnusedTownsfolks(unusuedTownsFolk);
   }
 
   const addDrunk = (unusuedTownsFolk: role[]) => {
@@ -113,6 +118,29 @@ function App() {
     }
     return results;
   }
+  const imgClicked = (alt: string) => {
+    console.log('img clicked', alt);
+    const ele = document.getElementById(alt);
+    console.log(ele);
+    const res = prompt("Enter the role to override:");
+    console.log(res);
+    if (!res) {
+      return;
+    }
+
+    let overrideRole = unusedTownsfolks.find(role => role.alt.toLowerCase() === res?.toLowerCase());
+    if (!overrideRole) {
+      overrideRole = unusedOutsiders.find(role => role.alt.toLowerCase() === res?.toLowerCase());
+    }
+    if (!overrideRole) {
+      alert('Please check the role name');
+      return;
+    }
+
+    ele?.setAttribute('alt', overrideRole.alt);
+    ele?.setAttribute('src', overrideRole.src);
+
+  }
 
   return (
     <div className="App">
@@ -125,45 +153,49 @@ function App() {
         id="names"
         name="names"
         onChange={handleChange}
-      // value={names}
       />
-      {/* <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'nowrap',
-        alignContent: 'flex-start',
-        alignItems: 'center'
-      }}>
-        <br />
-        <label>Number of townsfolks:</label>
-        <input type="number" name="townsfolkCount" onChange={handleChange} />
-        <br />
-        <label>Number of outsiders:</label>
-        <input type="number" name="outsiderCount" onChange={handleChange} />
-        <br />
-        <label>Number of minions:</label>
-        <input type="number" name="minionCount" onChange={handleChange} />
-        <br />
-        <br />
-      </div> */}
       <br />
       <br />
 
       <button style={{ width: '96px', height: '24px' }} onClick={calculate}>Generate</button>
-      <h2>Number of players: {players.length}
+      <h2 style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'space-evenly',
+        marginBottom: 0
+      }}>Number of players: {players.length}
         {players.length > 0 && <>
           <div style={{ color: 'green' }}>Townsfolks: {data.townsfolkCount} Outsiders: {data.outsiderCount}</div>
           <div style={{ color: 'red' }}>Minions: {data.minionCount} Demon: 1</div>
         </>}</h2>
+      {players.length > 0 && <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 0
+      }}><h4 style={{margin: 0}}>Unused townfolks:</h4> {unusedTownsfolks.map(r => r.alt).join(',')}</div>}
+      {players.length > 0 && <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 0
+      }}><h4 style={{margin: 0}}>Unused outsiders:</h4> {unusedOutsiders.map(r => r.alt).join(',')}</div>}
       <div style={{ marginLeft: '1%' }}>
         {players.map((player, index) => (
           <>
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <div style={{ fontSize: 24, fontWeight: 'bold' }}>{player.name}</div>
               <div>
-                <img src={player.imgSrc} alt={player.imgAlt} width='112' />
-                {player.imgAlt === DRUNK.alt && <img src={drunkRole.src} alt={drunkRole.alt} width='112' />}
-                {player.imgAlt === DEMON.alt && demonRoles.map((role, index) => <img src={role.src} alt={role.alt} width='112' />)}
+                <img id={player.imgAlt} onClick={(e) => imgClicked(player.imgAlt)} src={player.imgSrc} alt={player.imgAlt} width='112' />
+                {player.imgAlt === DRUNK.alt && <div >
+                  <img id={drunkRole.alt} onClick={(e) => imgClicked(drunkRole.alt)} src={drunkRole.src} alt={drunkRole.alt} width='112' />
+                </div>}
+                {player.imgAlt === DEMON.alt && demonRoles.map((role, index) => <img id={role.alt} onClick={(e) => imgClicked(role.alt)} src={role.src} alt={role.alt} width='112' />)}
               </div>
             </div>
             <div style={{ marginLeft: '-2%', borderBottom: 'solid' }}></div>
