@@ -12,8 +12,7 @@ interface player {
 function App() {
 
   const [data, setData] = useState({
-    names: "peter candy jim suz ka gary charlie ivy vivian jason mizzy",
-    // names: "",
+    names: "",
     townsfolkCount: 0,
     outsiderCount: 0,
     minionCount: 0,
