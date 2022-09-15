@@ -83,3 +83,5 @@ export const OUTSIDERS = [DRUNK,
     BUTLER]
 export const MINIONS = [BARON, SCARLERT_WOMAN, POISONER, SPY]
 export const DEMON = IMP;
+
+export const ALL_ROLES = [...TOWN_FOLKS, ...OUTSIDERS, ...MINIONS, DEMON];

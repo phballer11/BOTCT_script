@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { BARON, DEMON, DRUNK, MINIONS, OUTSIDERS, role, TOWN_FOLKS } from './images';
+import { ALL_ROLES, BARON, DEMON, DRUNK, MINIONS, OUTSIDERS, role, TOWN_FOLKS } from './images';
 import { getRoles } from './numberOfRoles';
 
 interface player {
@@ -119,26 +119,21 @@ function App() {
   }
   const imgClicked = (alt: string) => {
     console.log('img clicked', alt);
-    const ele = document.getElementById(alt);
-    console.log(ele);
     const res = prompt("Enter the role to override:");
-    console.log(res);
     if (!res) {
       return;
     }
 
-    let overrideRole = unusedTownsfolks.find(role => role.alt.toLowerCase() === res?.toLowerCase());
-    if (!overrideRole) {
-      overrideRole = unusedOutsiders.find(role => role.alt.toLowerCase() === res?.toLowerCase());
-    }
+    let overrideRole = ALL_ROLES.find(role => role.alt.toLowerCase() === res?.toLowerCase());
+   
     if (!overrideRole) {
       alert('Please check the role name');
       return;
     }
 
+    const ele = document.getElementById(alt);
     ele?.setAttribute('alt', overrideRole.alt);
     ele?.setAttribute('src', overrideRole.src);
-
   }
 
   return (
