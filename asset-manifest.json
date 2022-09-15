@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/BOTCT_script/static/css/main.72901cd0.css",
-    "main.js": "/BOTCT_script/static/js/main.7af54936.js",
+    "main.js": "/BOTCT_script/static/js/main.b7c412d2.js",
     "static/js/787.50366fae.chunk.js": "/BOTCT_script/static/js/787.50366fae.chunk.js",
     "static/media/saint.png": "/BOTCT_script/static/media/saint.4ecb4b7911fda38c105b.png",
     "static/media/fortune_teller.png": "/BOTCT_script/static/media/fortune_teller.a78505eadd9e5f928c30.png",
@@ -27,11 +27,11 @@
     "static/media/spy.png": "/BOTCT_script/static/media/spy.2cdc101b9a02e9af6101.png",
     "index.html": "/BOTCT_script/index.html",
     "main.72901cd0.css.map": "/BOTCT_script/static/css/main.72901cd0.css.map",
-    "main.7af54936.js.map": "/BOTCT_script/static/js/main.7af54936.js.map",
+    "main.b7c412d2.js.map": "/BOTCT_script/static/js/main.b7c412d2.js.map",
     "787.50366fae.chunk.js.map": "/BOTCT_script/static/js/787.50366fae.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.72901cd0.css",
-    "static/js/main.7af54936.js"
+    "static/js/main.b7c412d2.js"
   ]
 }
