@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { ALL_ROLES, BARON, DEMON, DRUNK, MINIONS, OUTSIDERS, role, TOWN_FOLKS } from './images';
 import { getRoles } from './numberOfRoles';
+import SelectRoles from './SelectRoles';
 
 interface player {
   name: string;
@@ -24,6 +25,8 @@ function App() {
   const [unusedTownsfolks, setUnusedTownsfolks] = useState<role[]>([]);
   const [unusedOutsiders, setUnusedOutsiders] = useState<role[]>([]);
 
+  const [showSelectRoles, setShowSelectRoles] = useState(false);
+
   const handleChange = (event: any) => {
     setData(prev => ({ ...prev, [event.target.name]: event.target.value }));
 
@@ -33,6 +36,64 @@ function App() {
     setPlayers([]);
     setDemonRoles([]);
     setDrunkRole(DRUNK);
+  }
+
+  const calculateCustomRoles = () => {
+    reset();
+    setShowSelectRoles(false);
+
+    const namesArray = data.names.split(' ');
+    const filteredNames = namesArray.filter((name) => name !== '');
+
+    if (filteredNames.length < 5 || filteredNames.length > 15) {
+      alert('Please check the number of players');
+      return;
+    }
+    const customRolesJson = localStorage.getItem('selectedRoles');
+    const customRoles:role[] = JSON.parse(customRolesJson || '[]')
+    if (customRoles.length !== filteredNames.length) {
+      alert('Please select the same number of custom roles as the number of players');
+      return;
+    }
+
+
+    const unusuedTownsFolk = TOWN_FOLKS.filter((townFolk) => customRoles.findIndex(r => r.alt === townFolk.alt) === -1);
+    const unusuedOutsiders = OUTSIDERS.filter((outsider) => customRoles.findIndex(r => r.alt === outsider.alt) === -1);
+
+    let result: player[] = [];
+    let townsfolkCount = 0;
+    let outsiderCount = 0;
+    let minionCount = 0;
+    let demonCount = 0;
+
+    filteredNames.forEach(name => {
+      // random pick a role
+      const randomIndex = Math.floor(Math.random() * customRoles.length);
+      const randomRole = customRoles[randomIndex];
+
+      if (TOWN_FOLKS.findIndex(t => t.alt === randomRole.alt) !== -1) {
+        townsfolkCount++;
+      } else if (OUTSIDERS.findIndex(o => o.alt === randomRole.alt) !== -1) {
+        outsiderCount++;
+      } else if (MINIONS.findIndex(m => m.alt === randomRole.alt) !== -1) {
+        minionCount++;
+      } else if (DEMON.alt === randomRole.alt) {
+        demonCount++;
+      }
+
+      if (randomRole.alt === DRUNK.alt) {
+        addDrunk(unusuedTownsFolk);
+      }
+
+      customRoles.splice(randomIndex, 1);
+      result.push({ name, imgSrc: randomRole.src, imgAlt: randomRole.alt });
+    });
+    setPlayers(result);
+
+    addDemonRoles([unusuedOutsiders, unusuedTownsFolk].flat());
+    setUnusedOutsiders(unusuedOutsiders);
+    setUnusedTownsfolks(unusuedTownsFolk);
+    setData(prev => ({ ...prev, townsfolkCount: townsfolkCount, outsiderCount: outsiderCount, minionCount: minionCount }));
   }
 
   const calculate = () => {
@@ -125,7 +186,7 @@ function App() {
     }
 
     let overrideRole = ALL_ROLES.find(role => role.alt.toLowerCase() === res?.toLowerCase());
-   
+
     if (!overrideRole) {
       alert('Please check the role name');
       return;
@@ -151,51 +212,60 @@ function App() {
       <br />
       <br />
 
-      <button style={{ width: '96px', height: '24px' }} onClick={calculate}>Generate</button>
-      <h2 style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
-        justifyContent: 'space-evenly',
-        marginBottom: 0
-      }}>Number of players: {players.length}
-        {players.length > 0 && <>
-          <div style={{ color: 'green' }}>Townsfolks: {data.townsfolkCount} Outsiders: {data.outsiderCount}</div>
-          <div style={{ color: 'red' }}>Minions: {data.minionCount} Demon: 1</div>
-        </>}</h2>
-      {players.length > 0 && <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 0
-      }}><h4 style={{margin: 0}}>Unused townfolks:</h4> {unusedTownsfolks.map(r => r.alt).join(',')}</div>}
-      {players.length > 0 && <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 0
-      }}><h4 style={{margin: 0}}>Unused outsiders:</h4> {unusedOutsiders.map(r => r.alt).join(',')}</div>}
-      <div style={{ marginLeft: '1%' }}>
-        {players.map((player, index) => (
-          <>
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <div style={{ fontSize: 24, fontWeight: 'bold' }}>{player.name}</div>
-              <div>
-                <img id={player.imgAlt} onClick={(e) => imgClicked(player.imgAlt)} src={player.imgSrc} alt={player.imgAlt} width='112' />
-                {player.imgAlt === DRUNK.alt && <div >
-                  <img id={drunkRole.alt} onClick={(e) => imgClicked(drunkRole.alt)} src={drunkRole.src} alt={drunkRole.alt} width='112' />
-                </div>}
-                {player.imgAlt === DEMON.alt && demonRoles.map((role, index) => <img id={role.alt} onClick={(e) => imgClicked(role.alt)} src={role.src} alt={role.alt} width='112' />)}
+      <button style={{ width: '140px', height: '24px' }} onClick={() => setShowSelectRoles(!showSelectRoles)}>{showSelectRoles ? 'Finish custom roles' : 'Set custom roles'}</button>
+      <br/>
+      <br/>
+      <button style={{ width: '160px', height: '24px' }} onClick={calculate}>Generate all roles</button>
+      <button style={{marginLeft: "8px", width: '160px', height: '24px' }} onClick={calculateCustomRoles}>Generate custom roles</button>
+
+      {showSelectRoles && <SelectRoles />}
+      {!showSelectRoles && <>
+        <h2 style={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'nowrap',
+          justifyContent: 'space-evenly',
+          marginBottom: 0
+        }}>Number of players: {players.length}
+          {players.length > 0 && <>
+            <div style={{ color: 'green' }}>Townsfolks: {data.townsfolkCount} Outsiders: {data.outsiderCount}</div>
+            <div style={{ color: 'red' }}>Minions: {data.minionCount} Demon: 1</div>
+          </>}</h2>
+        {players.length > 0 && <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'nowrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: 0
+        }}><h4 style={{ margin: 0 }}>Unused townfolks:</h4> {unusedTownsfolks.map(r => r.alt).join(',')}</div>}
+        {players.length > 0 && <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'nowrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: 0
+        }}><h4 style={{ margin: 0 }}>Unused outsiders:</h4> {unusedOutsiders.map(r => r.alt).join(',')}</div>}
+        <div style={{ marginLeft: '1%' }}>
+          {players.map((player, index) => (
+            <>
+              <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <div style={{ fontSize: 24, fontWeight: 'bold' }}>{player.name}</div>
+                <div>
+                  <img id={player.imgAlt} onClick={(e) => imgClicked(player.imgAlt)} src={player.imgSrc} alt={player.imgAlt} width='112' />
+                  {player.imgAlt === DRUNK.alt && <div >
+                    <img id={drunkRole.alt} onClick={(e) => imgClicked(drunkRole.alt)} src={drunkRole.src} alt={drunkRole.alt} width='112' />
+                  </div>}
+                  {player.imgAlt === DEMON.alt && demonRoles.map((role, index) => <img id={role.alt} onClick={(e) => imgClicked(role.alt)} src={role.src} alt={role.alt} width='112' />)}
+                </div>
               </div>
-            </div>
-            <div style={{ marginLeft: '-2%', borderBottom: 'solid' }}></div>
-          </>
-        ))}
-      </div>
+              <div style={{ marginLeft: '-2%', borderBottom: 'solid' }}></div>
+            </>
+          ))}
+        </div>
+      </>}
+
     </div>
   );
 }
