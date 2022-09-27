@@ -44,9 +44,9 @@ export default function SelectRoles() {
     };
 
     const getBorderWidth = (alt: string) => {
-        if (selectedRoles.findIndex(r => r.alt === alt) !== -1 
-        || drunkRole?.alt === alt ||
-        demonBluffs.findIndex(r => r.alt === alt) !== -1) {
+        if (selectedRoles.findIndex(r => r.alt === alt) !== -1
+            || drunkRole?.alt === alt ||
+            demonBluffs.findIndex(r => r.alt === alt) !== -1) {
             return "5px";
         }
 
@@ -96,7 +96,7 @@ export default function SelectRoles() {
             setDemonBluffs([...demonBluffs, role!]);
             localStorage.setItem('demonBluffs', JSON.stringify([...demonBluffs, role!]));
             return;
-        } 
+        }
         // remove first item from demonBluffs
         const updatedDemonBluffs = demonBluffs.slice(1);
         setDemonBluffs([...updatedDemonBluffs, role!]);
@@ -108,7 +108,7 @@ export default function SelectRoles() {
         setSelectMode(value);
     }
 
-    const reset =()=>{
+    const reset = () => {
         localStorage.clear();
         setSelectedRoles([]);
         setDrunkRole(undefined);
@@ -117,13 +117,27 @@ export default function SelectRoles() {
 
     return (
         <>
-            <div>
-                <input type="radio" value="0" name="mode" checked={selectMode === "0"} onChange={onValueChange} /> Select roles
-                <input type="radio" value="1" name="mode" checked={selectMode === "1"} onChange={onValueChange} /> Select drunk role (up to 1)
-                <input type="radio" value="2" name="mode" checked={selectMode === "2"} onChange={onValueChange} /> Select demon bluffs (up to 3)
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                    <input type="radio" value="0" name="mode" checked={selectMode === "0"} onChange={onValueChange} />
+                    <div style={{ width: "15px", height: "15px", backgroundColor: "blue" }}></div>
+                    Select roles
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                <input type="radio" value="1" name="mode" checked={selectMode === "1"} onChange={onValueChange} />
+                    <div style={{ width: "15px", height: "15px", backgroundColor: "orange" }}></div>
+                    Select drunk role (up to 1)
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                <input type="radio" value="2" name="mode" checked={selectMode === "2"} onChange={onValueChange} />
+                    <div style={{ width: "15px", height: "15px", backgroundColor: "yellow" }}></div>
+                    Select demon bluffs (up to 3)
+                </div>
+                 
+                 
             </div>
-            
-      <button onClick={reset}>Reset all</button>
+
+            <button onClick={reset}>Reset all</button>
             <br />
             <div>Tap to select roles to be in the game</div>
             <div style={{ color: "orange", fontWeight: "bold" }}>Warning: custome roles does not enforce the correct balance of roles. Please choose carefully.</div>

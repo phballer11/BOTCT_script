@@ -154,6 +154,13 @@ function App() {
   }
 
   const addDrunk = (unusuedTownsFolk: role[]) => {
+    const drunkRoleFromStorage = localStorage.getItem('drunkRole');
+    const drunkRoleObj = JSON.parse(drunkRoleFromStorage || '{}'); 
+    if(drunkRoleFromStorage) {
+      setDrunkRole(drunkRoleObj);
+      return;
+    }
+
     const randomIndex = Math.floor(Math.random() * unusuedTownsFolk.length);
     const randomRole = unusuedTownsFolk[randomIndex];
     unusuedTownsFolk.splice(randomIndex, 1);
@@ -161,6 +168,13 @@ function App() {
   }
 
   const addDemonRoles = (unusedRoles: role[]) => {
+    const demonBluffs = localStorage.getItem('demonBluffs');
+    const demonBluffsObj = JSON.parse(demonBluffs || '[]');
+    if(demonBluffsObj.length === 3) {
+      setDemonRoles(demonBluffsObj);
+      return;
+    }
+
     for (var i = 0; i < 3; i++) {
       const randomIndex = Math.floor(Math.random() * unusedRoles.length);
       const randomRole = unusedRoles[randomIndex];
