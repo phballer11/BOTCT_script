@@ -51,7 +51,7 @@ function App() {
       return;
     }
     const customRolesJson = localStorage.getItem('selectedRoles');
-    const customRoles:role[] = JSON.parse(customRolesJson || '[]')
+    const customRoles: role[] = JSON.parse(customRolesJson || '[]')
     if (customRoles.length !== filteredNames.length) {
       alert('Please select the same number of custom roles as the number of players');
       return;
@@ -214,10 +214,10 @@ function App() {
       <br />
 
       <button style={{ width: '140px', height: '24px' }} onClick={() => setShowSelectRoles(!showSelectRoles)}>{showSelectRoles ? 'Finish custom roles' : 'Set custom roles'}</button>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <button style={{ width: '160px', height: '24px' }} onClick={calculate}>Generate all roles</button>
-      <button style={{marginLeft: "8px", width: '160px', height: '24px' }} onClick={calculateCustomRoles}>Generate custom roles</button>
+      <button style={{ marginLeft: "8px", width: '160px', height: '24px' }} onClick={calculateCustomRoles}>Generate custom roles</button>
 
       {showSelectRoles && <SelectRoles />}
       {!showSelectRoles && <>
