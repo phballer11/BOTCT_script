@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { ALL_ROLES, BARON, DEMON, DRUNK, MINIONS, OUTSIDERS, role, TOWN_FOLKS } from './images';
 import { getRoles } from './numberOfRoles';
+import { isDemon, isMinion, isOutsider, isTownsfolk } from './rolesHelper';
 import SelectRoles from './SelectRoles';
 
 interface player {
@@ -71,13 +72,13 @@ function App() {
       const randomIndex = Math.floor(Math.random() * customRoles.length);
       const randomRole = customRoles[randomIndex];
 
-      if (TOWN_FOLKS.findIndex(t => t.alt === randomRole.alt) !== -1) {
+      if (isTownsfolk(randomRole)) {
         townsfolkCount++;
-      } else if (OUTSIDERS.findIndex(o => o.alt === randomRole.alt) !== -1) {
+      } else if (isOutsider(randomRole)) {
         outsiderCount++;
-      } else if (MINIONS.findIndex(m => m.alt === randomRole.alt) !== -1) {
+      } else if (isMinion(randomRole)) {
         minionCount++;
-      } else if (DEMON.alt === randomRole.alt) {
+      } else if (isDemon(randomRole)) {
         demonCount++;
       }
 
